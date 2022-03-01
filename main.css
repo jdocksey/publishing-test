@@ -1,3 +1,8 @@
+body {
+    background-color: #333;
+    color: #EEE;
+}
+
 * {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -10,4 +15,5 @@ button {
 a {
     font-family: monospace;
     font-size: 1.5rem;
+    color: #EA8;
 }
