@@ -6,6 +6,19 @@
 
     <link rel="stylesheet" href="./main.css"/>
     <link rel="stylesheet" href="./animations.css"/>
+
+    <script>
+        // Get the query params
+        const queryString = window.location.search;
+        const params = new URLSearchParams(queryString);
+
+        const p1 = params.get('p1');
+        const p2 = params.get('p2');
+
+        console.log(p1);
+        // absent params are `null`
+        console.log(p2);
+    </script>
 </head>
 <body>
     <h2>Home</h2>
