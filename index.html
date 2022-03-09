@@ -8,21 +8,64 @@
     <link rel="stylesheet" href="./animations.css"/>
 
     <script>
-        // Get the query params
-        const queryString = window.location.search;
-        const params = new URLSearchParams(queryString);
+        window.onload = onLoad;
+        let n = 1;
 
-        const p1 = params.get('p1');
-        const p2 = params.get('p2');
+        function onLoad() {
+            console.log('window.onload');
+            registerHandlers();
+        }
 
-        console.log(p1);
-        // absent params are `null`
-        console.log(p2);
+        function registerHandlers() {
+            document.getElementById('test-one').onclick = updateUrl;
+            document.getElementById('test-two').onclick = testRefresh;
+            document.getElementById('test-three').onclick = clearUrl;
+            document.getElementById('test-four').onclick = respondToQueryParams;
+        }
+
+        function respondToQueryParams() {
+            const queryString = window.location.search;
+            const params = new URLSearchParams(queryString);
+            const t1 = Number(params.get('t1'));
+
+            if (t1 > 2) {
+                console.log('3+');
+            } else {
+                console.log('2-');
+            }
+        }
+
+        function clearUrl() {
+            // TODO: Is there a more idiomatic way to do this?
+            // TODO: What do the first two parameters do?
+            history.pushState(null, '', window.location.pathname);
+        }
+
+        function updateUrl() {
+            // const params = new URLSearchParams(window.location.search);
+            const params = new URLSearchParams();
+
+            params.set('t1', n++);
+            const newUrl = window.location.pathname + '?' + params.toString();
+
+            history.pushState(null, '', newUrl);
+        }
+
+        function testRefresh() {
+            history.go();
+        }
     </script>
 </head>
 <body>
     <h2>Home</h2>
     <a href="./page1.html">Page 1</a>
+
+    <div>
+        <button type="button" id="test-one">T-1</button>
+        <button type="button" id="test-two">T-2</button>
+        <button type="button" id="test-three">T-3</button>
+        <button type="button" id="test-four">T-4</button>
+    </div>
 
     <div class="playground">
         <div class="mask"></div>
