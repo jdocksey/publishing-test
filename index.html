@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -21,6 +21,42 @@
             document.getElementById('test-two').onclick = testRefresh;
             document.getElementById('test-three').onclick = clearUrl;
             document.getElementById('test-four').onclick = respondToQueryParams;
+            document.getElementById('test-five').onclick = initiateRequestTest;
+        }
+
+        function initiateRequestTest() {
+            // TODO: Implement
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                console.log('READY STATE:');
+                console.log(xmlHttp.readyState);
+                console.log(typeof xmlHttp.readyState);
+                console.log('-----------');
+
+                console.log('STATUS:');
+                console.log(xmlHttp.status);
+                console.log(typeof xmlHttp.status);
+                console.log('-----------');
+                console.log();
+                console.log();
+
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    handleTestRequestResponse(xmlHttp);
+                }
+            }
+            const url = 'https://jdocksey.github.io/publishing-test/page2.html';
+            xmlHttp.open('GET', url, true);
+            xmlHttp.send(null);
+        }
+
+        function handleTestRequestResponse(response) {
+            console.log('RESPONSE:');
+            console.log(response);
+            console.log('RESPONSE TEXT:');
+            console.log(response.responseText);
+            console.log();
+            console.log();
+            console.log();
         }
 
         function respondToQueryParams() {
@@ -65,6 +101,7 @@
         <button type="button" id="test-two">T-2</button>
         <button type="button" id="test-three">T-3</button>
         <button type="button" id="test-four">T-4</button>
+        <button type="button" id="test-five">T-5</button>
     </div>
 
     <div class="playground">
