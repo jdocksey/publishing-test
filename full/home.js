@@ -665,6 +665,13 @@ var ElementID;
     ElementID1["EMBLEM_GRAIN_RIGHT_9"] = 'emblem-grain-right-9';
     ElementID1["EMBLEM_GRAIN_POINT"] = 'emblem-grain-point';
     ElementID1["EMBLEM_RIVER_FILL"] = 'emblem-river-fill';
+    ElementID1["EMBLEM_RIVER_HIGHLIGHT_TOP"] = 'emblem-river-highlight-top';
+    ElementID1["EMBLEM_RIVER_HIGHLIGHT_MIDDLE"] = 'emblem-river-highlight-middle';
+    ElementID1["EMBLEM_RIVER_HIGHLIGHT_BOTTOM"] = 'emblem-river-highlight-bottom';
+    ElementID1["EMBLEM_STAR_TOP"] = 'emblem-star-top';
+    ElementID1["EMBLEM_STAR_MIDDLE"] = 'emblem-star-middle';
+    ElementID1["EMBLEM_STAR_BOTTOM"] = 'emblem-star-bottom';
+    ElementID1["EMBLEM_TREE_FILL"] = 'emblem-tree-fill';
 })(ElementID || (ElementID = {}));
 var ElementClass;
 (function(ElementClass1) {
@@ -717,16 +724,27 @@ const delays = {
         betweenFurrows: 300
     },
     grain: {
-        leftHalf: 6300,
-        rightHalf: 6100,
+        leftHalf: 7600,
+        rightHalf: 7400,
         point: 9900,
-        bottomLeftLeaf: 7300,
+        bottomLeftLeaf: 7750,
         betweenLeaves: 400
     },
     moon: 9000,
-    mountainLeft: 7000,
-    mountainRight: 8500,
-    river: 750
+    mountainLeft: 9000,
+    mountainRight: 10500,
+    river: {
+        start: 750,
+        highlightTop: 9000,
+        highlightMiddle: 10000,
+        highlightBottom: 10500
+    },
+    stars: {
+        top: 12000,
+        middle: 13000,
+        bottom: 11000
+    },
+    tree: 7500
 };
 const durations = {
     furrow: 9000,
@@ -737,7 +755,12 @@ const durations = {
     moon: 3500,
     mountainLeft: 5000,
     mountainRight: 2500,
-    river: 8000
+    river: {
+        fill: 8000,
+        highlights: 1000
+    },
+    stars: 1000,
+    tree: 7700
 };
 function handleEmblemAnimation(scrollPosition, scrollBreakpoints) {
     if (between(scrollPosition, scrollBreakpoints.EMBLEM_ANIMATION_START, Infinity)) {
@@ -751,6 +774,8 @@ function startAnimation() {
     animateMountain('left');
     animateMountain('right');
     animateRiverAndConnectedLeaf();
+    animateTree();
+    animateStars();
 }
 function animateFurrows() {
     const furrows = [
@@ -806,7 +831,7 @@ function animateGrain() {
 function animateGrainLeaf(elementID, side, leaf) {
     const element = getElementByID(elementID);
     if (element) {
-        const delay = delays.river + (side === 'left' ? delays.grain.leftHalf : delays.grain.rightHalf) + Math.round(delays.grain.betweenLeaves * leaf);
+        const delay = delays.river.start + (side === 'left' ? delays.grain.leftHalf : delays.grain.rightHalf) + Math.round(delays.grain.betweenLeaves * leaf);
         element.animate({
             opacity: [
                 0,
@@ -867,6 +892,11 @@ function animateMountain(mountain) {
     }
 }
 function animateRiverAndConnectedLeaf() {
+    animateRiver();
+    animateRiverHighlights();
+    animateBottomLeftGrainLeaf();
+}
+function animateRiver() {
     const river = getElementByID(ElementID.EMBLEM_RIVER_FILL);
     if (river) {
         river.animate({
@@ -877,38 +907,51 @@ function animateRiverAndConnectedLeaf() {
             strokeDashoffset: [
                 100,
                 0
-            ],
-            'stroke-width': [
-                '0',
-                '45px'
-            ],
-            'stroke-dashoffset': [
-                100,
-                0
             ]
         }, {
-            duration: durations.river,
+            duration: durations.river.fill,
             easing: 'linear',
             fill: 'forwards',
-            delay: delays.river
+            delay: delays.river.start
         });
     }
+}
+function animateRiverHighlights() {
+    const highlightElements = [
+        [
+            getElementByID(ElementID.EMBLEM_RIVER_HIGHLIGHT_TOP),
+            delays.river.highlightTop
+        ],
+        [
+            getElementByID(ElementID.EMBLEM_RIVER_HIGHLIGHT_MIDDLE),
+            delays.river.highlightMiddle
+        ],
+        [
+            getElementByID(ElementID.EMBLEM_RIVER_HIGHLIGHT_BOTTOM),
+            delays.river.highlightBottom
+        ]
+    ];
+    highlightElements.forEach(([element, delay])=>{
+        if (element) {
+            element.animate({
+                opacity: [
+                    0,
+                    1
+                ]
+            }, {
+                duration: durations.river.highlights,
+                easing: 'linear',
+                fill: 'forwards',
+                delay
+            });
+        }
+    });
+}
+function animateBottomLeftGrainLeaf() {
     const leaf = getElementByID(ElementID.EMBLEM_GRAIN_LEFT_1_FILL);
     if (leaf) {
         leaf.animate({
-            strokeWidth: [
-                '2px',
-                '20px'
-            ],
             strokeDashoffset: [
-                100,
-                0
-            ],
-            'stroke-width': [
-                '0',
-                '20px'
-            ],
-            'stroke-dashoffset': [
                 100,
                 0
             ]
@@ -919,6 +962,53 @@ function animateRiverAndConnectedLeaf() {
             delay: delays.grain.bottomLeftLeaf
         });
     }
+}
+function animateTree() {
+    const tree = getElementByID(ElementID.EMBLEM_TREE_FILL);
+    if (tree) {
+        tree.animate({
+            strokeDashoffset: [
+                100,
+                0
+            ]
+        }, {
+            duration: durations.tree,
+            easing: 'linear',
+            fill: 'forwards',
+            delay: delays.tree
+        });
+    }
+}
+function animateStars() {
+    const stars = [
+        [
+            getElementByID(ElementID.EMBLEM_STAR_TOP),
+            delays.stars.top
+        ],
+        [
+            getElementByID(ElementID.EMBLEM_STAR_MIDDLE),
+            delays.stars.middle
+        ],
+        [
+            getElementByID(ElementID.EMBLEM_STAR_BOTTOM),
+            delays.stars.bottom
+        ]
+    ];
+    stars.forEach(([element, delay])=>{
+        if (element) {
+            element.animate({
+                opacity: [
+                    0,
+                    1
+                ]
+            }, {
+                duration: durations.stars,
+                easing: 'linear',
+                fill: 'forwards',
+                delay
+            });
+        }
+    });
 }
 function handleIntro(scrollPosition, scrollBreakpoints) {
     if (between(scrollPosition, scrollBreakpoints.INTRO_0_START, scrollBreakpoints.INTRO_5_END)) {

@@ -38,8 +38,12 @@
     justify-content: center;
 
     /* TODO: Set this properly */
-    height: 50vh;
+    height: 100vh;
     fill: var(--color-emblem-primary);
+}
+
+#emblem {
+    height: 100%;
 }
 
 #emblem-container.hidden {
@@ -86,10 +90,37 @@
     stroke-dashoffset: 100;
 }
 
-.emblem-river-highlight {
-    fill: var(--color-background);
+#emblem-grain-left-1-fill {
+    stroke-width: 20px;
 }
 
+#emblem-river-highlights > path {
+    fill: var(--color-background);
+    opacity: 0;
+}
+
+#emblem-stars > path {
+    opacity: 0;
+}
+
+/* TODO: Remove */
+#tree-test {
+    fill: #58F5;
+}
+
+#emblem-tree-fill {
+    fill: none;
+    stroke: var(--color-emblem-primary);
+    stroke-width: 220px;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+}
+
+/* TODO: Remove this when the final emblem SVG code is installed */
+.emblem-cover {
+    fill: var(--color-background);
+}
 /* #endregion */
 
 /* #region poem viewer */
