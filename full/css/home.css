@@ -1,0 +1,112 @@
+:root {
+    --color-background: #333;
+    --color-emblem-primary: #D9C66A;
+}
+
+#scroll-container {
+    position: relative;
+    /* TODO: Add an explanation */
+    /* TODO: Set this value properly */
+    height: 600vh;
+}
+
+/* #region intro */
+#intro {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#intro.hidden {
+    display: none;
+}
+
+.intro-section {
+    position: absolute;
+}
+/* #endregion */
+
+/* #region emblem */
+#emblem-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* TODO: Set this properly */
+    height: 50vh;
+    fill: var(--color-emblem-primary);
+}
+
+#emblem-container.hidden {
+    display: none;
+}
+
+/* TODO: Remove this when the final SVG is used */
+#emblem-moon-container,
+#emblem-mountain-left,
+#emblem-mountain-right,
+#emblem-grain-container > path
+{
+    opacity: 0;
+}
+
+#emblem-furrow-container > path {
+    transform: scaleY(0);
+}
+
+/* TODO: Simplify or remove these when the final SVG is being used */
+#emblem-furrow-1 { transform-origin: 0 395px; }
+#emblem-furrow-2 { transform-origin: 0 403px; }
+#emblem-furrow-3 { transform-origin: 0 413px; }
+#emblem-furrow-4 { transform-origin: 0 413px; }
+#emblem-furrow-5 { transform-origin: 0 423px; }
+#emblem-furrow-6 { transform-origin: 0 423px; }
+#emblem-furrow-7 { transform-origin: 0 433px; }
+#emblem-furrow-8 { transform-origin: 0 438px; }
+#emblem-furrow-9 { transform-origin: 0 443px; }
+#emblem-furrow-10 { transform-origin: 0 452px; }
+#emblem-furrow-11 { transform-origin: 0 464px; }
+
+/* TODO: Remove this when the final SVG is used */
+#emblem-moon-mask {
+    fill: var(--color-background);
+}
+
+#emblem-river-fill, #emblem-grain-left-1-fill {
+    fill: none;
+    stroke: var(--color-emblem-primary);
+    stroke-width: 0;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+}
+
+.emblem-river-highlight {
+    fill: var(--color-background);
+}
+
+/* #endregion */
+
+/* #region poem viewer */
+#poem-viewer {
+    background-color: #EEE;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#poem-viewer-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    padding: 2rem;
+}
+/* #endregion */

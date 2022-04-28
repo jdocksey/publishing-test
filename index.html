@@ -1,112 +1,49 @@
-
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Test</title>
-
-    <link rel="stylesheet" href="./main.css"/>
-    <link rel="stylesheet" href="./animations.css"/>
+    <title>Poems of Earth</title>
+    <link href="./css/reset.css" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
 
     <script>
-        window.onload = onLoad;
-        let n = 1;
-
-        function onLoad() {
-            console.log('window.onload');
-            registerHandlers();
-        }
-
-        function registerHandlers() {
-            document.getElementById('test-one').onclick = updateUrl;
-            document.getElementById('test-two').onclick = testRefresh;
-            document.getElementById('test-three').onclick = clearUrl;
-            document.getElementById('test-four').onclick = respondToQueryParams;
-            document.getElementById('test-five').onclick = initiateRequestTest;
-        }
-
-        function initiateRequestTest() {
-            // TODO: Implement
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.onreadystatechange = function() {
-                console.log('READY STATE:');
-                console.log(xmlHttp.readyState);
-                console.log(typeof xmlHttp.readyState);
-                console.log('-----------');
-
-                console.log('STATUS:');
-                console.log(xmlHttp.status);
-                console.log(typeof xmlHttp.status);
-                console.log('-----------');
-                console.log();
-                console.log();
-
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-                    handleTestRequestResponse(xmlHttp);
-                }
-            }
-            const url = 'https://jdocksey.github.io/publishing-test/page2.html';
-            xmlHttp.open('GET', url, true);
-            xmlHttp.send(null);
-        }
-
-        function handleTestRequestResponse(response) {
-            console.log('RESPONSE:');
-            console.log(response);
-            console.log('RESPONSE TEXT:');
-            console.log(response.responseText);
-            console.log();
-            console.log();
-            console.log();
-        }
-
-        function respondToQueryParams() {
-            const queryString = window.location.search;
-            const params = new URLSearchParams(queryString);
-            const t1 = Number(params.get('t1'));
-
-            if (t1 > 2) {
-                console.log('3+');
-            } else {
-                console.log('2-');
-            }
-        }
-
-        function clearUrl() {
-            // TODO: Is there a more idiomatic way to do this?
-            // TODO: What do the first two parameters do?
-            history.pushState(null, '', window.location.pathname);
-        }
-
-        function updateUrl() {
-            // const params = new URLSearchParams(window.location.search);
-            const params = new URLSearchParams();
-
-            params.set('t1', n++);
-            const newUrl = window.location.pathname + '?' + params.toString();
-
-            history.pushState(null, '', newUrl);
-        }
-
-        function testRefresh() {
-            history.go();
-        }
+        window.onload = () => {
+            // When JavaScript is enabled, make the links to the fully-featured website available
+            document.getElementById('javascript-enabled').classList.remove('hidden');
+            document.getElementById('javascript-disabled').classList.add('hidden');
+        };
     </script>
+
+    <style>
+        body {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background-color: #CCC;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h2>Home</h2>
-    <a href="./page1.html">Page 1</a>
-
-    <div>
-        <button type="button" id="test-one">T-1</button>
-        <button type="button" id="test-two">T-2</button>
-        <button type="button" id="test-three">T-3</button>
-        <button type="button" id="test-four">T-4</button>
-        <button type="button" id="test-five">T-5</button>
+    <div id="javascript-disabled">
+        <a href="./basic/home.html">Enter</a>
     </div>
 
-    <div class="playground">
-        <div class="mask"></div>
-        <div class="circle"></div>
+    <div id="javascript-enabled" class="hidden">
+        <a href="./full/home.html">Enter</a>
+        <div id="options">
+            <a href="./basic/home.html">Enter without JavaScript</a>
+        </div>
     </div>
 </body>
 </html>

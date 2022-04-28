@@ -1,0 +1,13 @@
+.home-link {
+    color: #DDD;
+    display: block;
+    margin-bottom: 1.2rem;
+}
+
+.poem-title {
+    color: #eee;
+}
+
+.poem-content {
+    font-family: inherit;
+}
